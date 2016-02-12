@@ -17,8 +17,6 @@
 
 
 
-
-
 DEV_HOME=/Users/ericanderson/Development/Taulia
 
 
@@ -33,16 +31,23 @@ if [ $# -eq 0 ] || [ $1 == 'start' ]; then
 ## Company
   ttab -t company gradle run -x test -p $DEV_HOME/intapi-company
 ## Invoice
-  ttab -t invoice gradle run -x test -p $DEV_HOME/intapi-invoice
-  ttab -t invoice-prochain-invoice-creation gradle run -x test -p $DEV_HOME/intapi-invoice/prochains/external-invoice-creation
-  ttab -t inovice-prochain-invoice-finance-update gradle run -x test -p $DEV_HOME/intapi-invoice/prochains/external-invoice-finance-update
+#  ttab -t invoice gradle run -x test -p $DEV_HOME/intapi-invoice
+#  ttab -t invoice-prochain-invoice-creation gradle run -x test -p $DEV_HOME/intapi-invoice/prochains/external-invoice-creation
+#  ttab -t inovice-prochain-invoice-finance-update gradle run -x test -p $DEV_HOME/intapi-invoice/prochains/external-invoice-finance-update
 ## EarlyPayment  
-  ttab -t EP gradle run -x test -p $DEV_HOME/intapi-early-payment
-  ttab -t EP-prochain-erp-reply-processing gradle run -x test -p $DEV_HOME/intapi-early-payment/prochains/erp-reply-processing
+#  ttab -t EP gradle run -x test -p $DEV_HOME/intapi-early-payment
+#  ttab -t EP-prochain-erp-reply-processing gradle run -x test -p $DEV_HOME/intapi-early-payment/prochains/erp-reply-processing
+#  Enrollment
+  ttab -t Enrollment gradle server:run -x test -p $DEV_HOME/intapi-enrollment
 ## SIM  
   ttab -t SIM gradle server:run -x test -p $DEV_HOME/intapi-supplier-information-management
-  ttab -t SIM-prochain gradle supplier-details-processing:run -x test -p $DEV_HOME/intapi-supplier-information-management/prochains
+  ttab -t SIM-prochain gradle supplier-data-processing:run -x test -p $DEV_HOME/intapi-supplier-information-management/prochains
 fi
+
+
+
+## Close Tabs
+## osascript -e 'tell application "Terminal" to close (every window whose name contains ".command")' & exit
 
 
 
