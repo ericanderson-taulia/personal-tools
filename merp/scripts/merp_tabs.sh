@@ -38,10 +38,12 @@ if [ $# -eq 0 ] || [ $1 == 'start' ]; then
 #  ttab -t EP gradle run -x test -p $DEV_HOME/intapi-early-payment
 #  ttab -t EP-prochain-erp-reply-processing gradle run -x test -p $DEV_HOME/intapi-early-payment/prochains/erp-reply-processing
 #  Enrollment
-  ttab -t Enrollment gradle server:run -x test -p $DEV_HOME/intapi-enrollment
+#  ttab -t Enrollment gradle server:run -x test -p $DEV_HOME/intapi-enrollment
+### Outbound-Tracker
+   ttab -t outbound-tracker gradle server:run -x test -p $DEV_HOME/intapi-outbound-tracker
 ## SIM  
-  ttab -t SIM gradle server:run -x test -p $DEV_HOME/intapi-supplier-information-management
-  ttab -t SIM-prochain gradle supplier-data-processing:run -x test -p $DEV_HOME/intapi-supplier-information-management/prochains
+#  ttab -t SIM gradle server:run -x test -p $DEV_HOME/intapi-supplier-information-management
+#  ttab -t SIM-prochain gradle supplier-data-processing:run -x test -p $DEV_HOME/intapi-supplier-information-management/prochains
 fi
 
 
