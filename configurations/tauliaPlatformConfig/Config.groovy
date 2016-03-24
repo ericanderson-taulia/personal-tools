@@ -204,16 +204,27 @@ taulia {
     serverUrl = 'http://localhost:8888/'
   }
 
+/* ======== FileDispatcher API ========*/
+  fileDispatcherClient {
+    url = "https://localhost:8787"
+    clientCertificateLocation = "./test/integration/com/taulia/certs/fileDispatcher_appserver.pfx"
+    clientCertificatePassword = "password"
+    trustStoreLocation = "./test/integration/com/taulia/certs/fileDispatcher_serverstore.jks"
+    trustStorePassword = "password"
+    timeout = 60000
+    maxPoolSize = 10
+  }
+
 /* ======== Company API ======== */
- company {
-   client {
-     keystoreFile = './test/integration/com/taulia/certs/company-appserver.pfx'
-     keystorePassphrase = 'password'
-     truststoreFile = './test/integration/com/taulia/certs/company-serverstore.jks'
-     truststorePassphrase = 'password'
-     serverUrl = 'https://localhost:9415'
-     maxPoolSize = 10
-     timeout = 10000
+  company {
+    client {
+      keystoreFile = './test/integration/com/taulia/certs/company-appserver.pfx'
+      keystorePassphrase = 'password'
+      truststoreFile = './test/integration/com/taulia/certs/company-serverstore.jks'
+      truststorePassphrase = 'password'
+      serverUrl = 'https://localhost:9415'
+      maxPoolSize = 10
+      timeout = 10000
     }
   }
 
