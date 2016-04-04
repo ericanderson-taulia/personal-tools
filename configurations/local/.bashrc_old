@@ -1,0 +1,18 @@
+
+
+alias ..='cd ..'
+alias mci='mvn clean install'
+alias m='mvn package'
+alias g='gradle check'
+
+
+export JAVA_HOME=/Library/Java/JavaVirtualMachines/jdk1.8.0_65.jdk/Contents/Home
+export JAVA_OPTS="-Djava.net.preferIPv4Stack=true"
+
+export PATH=$JAVA_HOME/bin:$PATH
+
+
+
+#THIS MUST BE AT THE END OF THE FILE FOR SDKMAN TO WORK!!!
+export SDKMAN_DIR="/Users/eanderson/.sdkman"
+[[ -s "/Users/eanderson/.sdkman/bin/sdkman-init.sh" ]] && source "/Users/eanderson/.sdkman/bin/sdkman-init.sh"
