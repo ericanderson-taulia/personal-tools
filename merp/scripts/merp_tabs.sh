@@ -29,7 +29,7 @@ if [ $# -eq 0 ] || [ $1 == 'start' ]; then
   ttab -t ticket-management gradle run -x test -p $DEV_HOME/intapi-ticket-management
   ttab -t buyer-integration gradle run -x test -p $DEV_HOME/extapi-buyer-integration
 ## Company
-  ttab -t company gradle run -x test -p $DEV_HOME/intapi-company
+#  ttab -t company gradle run -x test -p $DEV_HOME/intapi-company
 ## Invoice
 #  ttab -t invoice gradle run -x test -p $DEV_HOME/intapi-invoice
 #  ttab -t invoice-prochain-invoice-creation gradle run -x test -p $DEV_HOME/intapi-invoice/prochains/external-invoice-creation
@@ -42,8 +42,8 @@ if [ $# -eq 0 ] || [ $1 == 'start' ]; then
 ### Outbound-Tracker
    ttab -t outbound-tracker gradle server:run -x test -p $DEV_HOME/intapi-outbound-tracker
 ## SIM  
-#  ttab -t SIM gradle server:run -x test -p $DEV_HOME/intapi-supplier-information-management
-#  ttab -t SIM-prochain gradle supplier-data-processing:run -x test -p $DEV_HOME/intapi-supplier-information-management/prochains
+  ttab -t SIM gradle server:run -x test -p $DEV_HOME/intapi-supplier-information-management
+  ttab -t SIM-prochain gradle supplier-data-processing:run -x test -p $DEV_HOME/intapi-supplier-information-management/prochains
 fi
 
 

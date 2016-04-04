@@ -204,6 +204,20 @@ taulia {
     serverUrl = 'http://localhost:8888/'
   }
 
+
+  /* ======== intapi-outbound-tracker API ========*/
+  outboundTracker {
+    client {
+      url = "https://localhost:8502"
+      keystoreFile = "./test/integration/com/taulia/certs/outboundtracker_appserver.pfx"
+      keystorePassphrase = "password"
+      truststoreFile = "./test/integration/com/taulia/certs/outboundtracker_serverstore.jks"
+      truststorePassphrase = "password"
+      timeout = 10000
+      maxPoolSize = 10
+    }
+  }
+
 /* ======== FileDispatcher API ========*/
   fileDispatcherClient {
     url = "https://localhost:8787"
@@ -296,6 +310,7 @@ taulia {
     server = "localhost"
     port = 8488
   }
+
   /* ======== Early Payment API ======== */
   earlyPaymentApi {
     server = "https://localhost:8490"
