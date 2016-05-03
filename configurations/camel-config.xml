@@ -1,0 +1,304 @@
+<beans
+  xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:cml="http://camel.apache.org/schema/spring"
+  xsi:schemaLocation="
+    http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+    http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring-2.13.0.xsd">
+
+  <cml:camelContext id="camel-externalInvoice" shutdownRunningTask="CompleteAllTasks">
+
+    <cml:route>
+      <cml:from
+        uri="activemq:queue:com.taulia.queues.message.announcementMessageCreator.input?concurrentConsumers=3&amp;maxConcurrentConsumers=5&amp;transacted=true&amp;lazyCreateTransactionManager=false"/>
+      <cml:delay asyncDelayed="true">
+        <cml:header>AMQ_SCHEDULED_DELAY</cml:header>
+      </cml:delay>
+      <cml:to uri="activemq:queue:com.taulia.queues.message.announcementMessageCreator.output"/>
+    </cml:route>
+
+    <cml:route>
+      <cml:from
+        uri="activemq:queue:com.taulia.invoice.queues.externalinvoice.create.input?concurrentConsumers=3&amp;maxConcurrentConsumers=5&amp;transacted=true&amp;lazyCreateTransactionManager=false"/>
+      <cml:delay asyncDelayed="true">
+        <cml:header>AMQ_SCHEDULED_DELAY</cml:header>
+      </cml:delay>
+      <cml:to uri="activemq:queue:com.taulia.invoice.queues.externalinvoice.create.output"/>
+    </cml:route>
+
+    <cml:route>
+      <cml:from
+        uri="activemq:queue:com.taulia.invoice.queues.externalinvoicefinance.update.input?concurrentConsumers=3&amp;maxConcurrentConsumers=5&amp;transacted=true&amp;lazyCreateTransactionManager=false"/>
+      <cml:delay asyncDelayed="true">
+        <cml:header>AMQ_SCHEDULED_DELAY</cml:header>
+      </cml:delay>
+      <cml:to uri="activemq:queue:com.taulia.invoice.queues.externalinvoicefinance.update.output"/>
+    </cml:route>
+
+    <cml:route>
+      <cml:from
+        uri="activemq:queue:com.taulia.invoice.queues.ticketManagement.update.input?concurrentConsumers=3&amp;maxConcurrentConsumers=5&amp;transacted=true&amp;lazyCreateTransactionManager=false"/>
+      <cml:delay asyncDelayed="true">
+        <cml:header>AMQ_SCHEDULED_DELAY</cml:header>
+      </cml:delay>
+      <cml:to uri="activemq:queue:com.taulia.invoice.queues.ticketManagement.update.output"/>
+    </cml:route>
+
+    <cml:route>
+      <cml:from
+        uri="activemq:queue:com.taulia.sim.queues.supplierData.process.input?concurrentConsumers=3&amp;maxConcurrentConsumers=5&amp;transacted=true&amp;lazyCreateTransactionManager=false"/>
+      <cml:delay asyncDelayed="true">
+        <cml:header>AMQ_SCHEDULED_DELAY</cml:header>
+      </cml:delay>
+      <cml:to uri="activemq:queue:com.taulia.sim.queues.supplierData.process.output"/>
+    </cml:route>
+
+    <cml:route>
+      <cml:from uri="activemq:queue:com.taulia.queues.earlypayment.earlyPaymentCreationNotification?concurrentConsumers=3&amp;maxConcurrentConsumers=5&amp;asyncConsumer=true" />
+      <cml:delay asyncDelayed="true">
+        <cml:header>AMQ_SCHEDULED_DELAY</cml:header>
+      </cml:delay>
+      <cml:to uri="activemq:queue:com.taulia.queues.earlypayment.earlyPaymentCreationNotification.delayed" />
+    </cml:route>
+
+   <cml:route>
+      <cml:from
+        uri="activemq:queue:com.taulia.sim.queues.supplierData.ticketUpdate.input?concurrentConsumers=3&amp;maxConcurrentConsumers=5&amp;transacted=true&amp;lazyCreateTransactionManager=false"/>
+      <cml:delay asyncDelayed="true">
+        <cml:header>AMQ_SCHEDULED_DELAY</cml:header>
+      </cml:delay>
+      <cml:to uri="activemq:queue:com.taulia.sim.queues.supplierData.ticketUpdate.output"/>
+    </cml:route>
+
+
+
+
+    <!-- Queues from Monolith System -->
+
+    <cml:route>
+      <cml:from uri="activemq:queue:com.taulia.queues.invoice.invoicePurchaseOrderLinkQueue?concurrentConsumers=3&amp;maxConcurrentConsumers=5&amp;asyncConsumer=true" />
+      <cml:delay asyncDelayed="true">
+        <cml:header>AMQ_SCHEDULED_DELAY</cml:header>
+      </cml:delay>
+      <cml:to uri="activemq:queue:com.taulia.queues.invoice.invoicePurchaseOrderLinkQueue.delayed" />
+    </cml:route>
+
+    <cml:route>
+      <cml:from uri="activemq:queue:com.taulia.queues.invoice.submission?concurrentConsumers=3&amp;maxConcurrentConsumers=5&amp;asyncConsumer=true" />
+      <cml:delay asyncDelayed="true">
+        <cml:header>AMQ_SCHEDULED_DELAY</cml:header>
+      </cml:delay>
+      <cml:to uri="activemq:queue:com.taulia.queues.invoice.submission.delayed" />
+    </cml:route>
+
+    <cml:route>
+      <cml:from uri="activemq:queue:com.taulia.queues.invoice.validation.trustWeaverPoll?concurrentConsumers=3&amp;maxConcurrentConsumers=5&amp;asyncConsumer=true" />
+      <cml:delay asyncDelayed="true">
+        <cml:header>AMQ_SCHEDULED_DELAY</cml:header>
+      </cml:delay>
+      <cml:to uri="activemq:queue:com.taulia.queues.invoice.validation.trustWeaverPoll.delayed" />
+    </cml:route>
+
+    <cml:route>
+      <cml:from uri="activemq:queue:com.taulia.queues.payment.persistCoreDataPurchaseOrderRequest?concurrentConsumers=1&amp;maxConcurrentConsumers=1&amp;asyncConsumer=true" />
+      <cml:delay asyncDelayed="true">
+        <cml:header>AMQ_SCHEDULED_DELAY</cml:header>
+      </cml:delay>
+      <cml:to uri="activemq:queue:com.taulia.queues.payment.persistCoreDataPurchaseOrderRequest.delayed" />
+    </cml:route>
+
+    <cml:route>
+      <cml:from uri="activemq:queue:com.taulia.queues.invoice.persistCdi?concurrentConsumers=1&amp;maxConcurrentConsumers=1&amp;asyncConsumer=true" />
+      <cml:delay asyncDelayed="true">
+        <cml:header>AMQ_SCHEDULED_DELAY</cml:header>
+      </cml:delay>
+      <cml:to uri="activemq:queue:com.taulia.queues.invoice.persistCdi.delayed" />
+    </cml:route>
+
+    <cml:route>
+      <cml:from
+        uri="activemq:queue:com.taulia.queues.purchaseOrder.purchaseOrderReconciliationQueue?concurrentConsumers=1&amp;maxConcurrentConsumers=1&amp;asyncConsumer=true"/>
+      <cml:delay asyncDelayed="true">
+        <cml:header>AMQ_SCHEDULED_DELAY</cml:header>
+      </cml:delay>
+      <cml:to uri="activemq:queue:com.taulia.queues.purchaseOrder.purchaseOrderReconciliationQueue.delayed"/>
+    </cml:route>
+
+    <cml:route>
+      <cml:from uri="activemq:queue:com.taulia.queues.logging.aggregation?concurrentConsumers=1&amp;maxConcurrentConsumers=1&amp;asyncConsumer=true" />
+      <cml:delay asyncDelayed="true">
+        <cml:header>AMQ_SCHEDULED_DELAY</cml:header>
+      </cml:delay>
+      <cml:to uri="activemq:queue:com.taulia.queues.logging.aggregation.delayed" />
+    </cml:route>
+    <!-- End Monolith -->
+
+    <!--Begin app-prochain -->
+    <cml:route>
+      <cml:from uri="activemq:queue:com.taulia.queues.funderPaymentRecordResponse?concurrentConsumers=1&amp;maxConcurrentConsumers=1&amp;asyncConsumer=true" />
+      <cml:delay asyncDelayed="true">
+        <cml:header>AMQ_SCHEDULED_DELAY</cml:header>
+      </cml:delay>
+      <cml:to uri="activemq:queue:com.taulia.queues.funderPaymentRecordResponse.delayed" />
+    </cml:route>
+
+    <cml:route>
+      <cml:from uri="activemq:queue:com.taulia.queues.bankInfo.update?concurrentConsumers=1&amp;maxConcurrentConsumers=1&amp;asyncConsumer=true" />
+      <cml:delay asyncDelayed="true">
+        <cml:header>AMQ_SCHEDULED_DELAY</cml:header>
+      </cml:delay>
+      <cml:to uri="activemq:queue:com.taulia.queues.bankInfo.update.delayed" />
+    </cml:route>
+
+    <cml:route>
+      <cml:from uri="activemq:queue:com.taulia.queues.supplier.supplierMasterUpdateChannel?concurrentConsumers=1&amp;maxConcurrentConsumers=1&amp;asyncConsumer=true" />
+      <cml:delay asyncDelayed="true">
+        <cml:header>AMQ_SCHEDULED_DELAY</cml:header>
+      </cml:delay>
+      <cml:to uri="activemq:queue:com.taulia.queues.supplier.supplierMasterUpdateChannel.delayed" />
+    </cml:route>
+
+    <cml:route>
+      <cml:from uri="activemq:queue:com.taulia.queues.supplierMerge.request?concurrentConsumers=1&amp;maxConcurrentConsumers=1&amp;asyncConsumer=true" />
+      <cml:delay asyncDelayed="true">
+        <cml:header>AMQ_SCHEDULED_DELAY</cml:header>
+      </cml:delay>
+      <cml:to uri="activemq:queue:com.taulia.queues.supplierMerge.request.delayed" />
+    </cml:route>
+
+    <cml:route>
+      <cml:from uri="activemq:queue:com.taulia.queues.termsAndConditionsUpdateJsonQueue?concurrentConsumers=1&amp;maxConcurrentConsumers=1&amp;asyncConsumer=true" />
+      <cml:delay asyncDelayed="true">
+        <cml:header>AMQ_SCHEDULED_DELAY</cml:header>
+      </cml:delay>
+      <cml:to uri="activemq:queue:com.taulia.queues.termsAndConditionsUpdateJsonQueue.delayed" />
+    </cml:route>
+
+    <cml:route>
+      <cml:from uri="activemq:queue:com.taulia.queues.trustedComponentInvoiceUpdateJsonQueue?concurrentConsumers=1&amp;maxConcurrentConsumers=1&amp;asyncConsumer=true" />
+      <cml:delay asyncDelayed="true">
+        <cml:header>AMQ_SCHEDULED_DELAY</cml:header>
+      </cml:delay>
+      <cml:to uri="activemq:queue:com.taulia.queues.trustedComponentInvoiceUpdateJsonQueue.delayed" />
+    </cml:route>
+
+    <cml:route>
+      <cml:from uri="activemq:queue:com.taulia.queues.invoice.duplicateInvoiceMergeQueue?concurrentConsumers=1&amp;maxConcurrentConsumers=1&amp;asyncConsumer=true" />
+      <cml:delay asyncDelayed="true">
+        <cml:header>AMQ_SCHEDULED_DELAY</cml:header>
+      </cml:delay>
+      <cml:to uri="activemq:queue:com.taulia.queues.invoice.duplicateInvoiceMergeQueue.delayed" />
+    </cml:route>
+
+    <cml:route>
+      <cml:from uri="activemq:queue:com.taulia.queues.documentChangeData?concurrentConsumers=1&amp;maxConcurrentConsumers=1&amp;asyncConsumer=true" />
+      <cml:delay asyncDelayed="true">
+        <cml:header>AMQ_SCHEDULED_DELAY</cml:header>
+      </cml:delay>
+      <cml:to uri="activemq:queue:com.taulia.queues.documentChangeData.delayed" />
+    </cml:route>
+
+    <cml:route>
+      <cml:from uri="activemq:queue:com.taulia.queues.earlyPayment.status?concurrentConsumers=1&amp;maxConcurrentConsumers=1&amp;asyncConsumer=true" />
+      <cml:delay asyncDelayed="true">
+        <cml:header>AMQ_SCHEDULED_DELAY</cml:header>
+      </cml:delay>
+      <cml:to uri="activemq:queue:com.taulia.queues.earlyPayment.status.delayed" />
+    </cml:route>
+
+    <cml:route>
+      <cml:from uri="activemq:queue:com.taulia.queues.trustedComponentEarlyPaymentAckJsonQueue?concurrentConsumers=1&amp;maxConcurrentConsumers=1&amp;asyncConsumer=true" />
+      <cml:delay asyncDelayed="true">
+        <cml:header>AMQ_SCHEDULED_DELAY</cml:header>
+      </cml:delay>
+      <cml:to uri="activemq:queue:com.taulia.queues.trustedComponentEarlyPaymentAckJsonQueue.delayed" />
+    </cml:route>
+
+    <cml:route>
+      <cml:from uri="activemq:queue:com.taulia.queues.trustedComponentEarlyPaymentCancelJsonQueue?concurrentConsumers=1&amp;maxConcurrentConsumers=1&amp;asyncConsumer=true" />
+      <cml:delay asyncDelayed="true">
+        <cml:header>AMQ_SCHEDULED_DELAY</cml:header>
+      </cml:delay>
+      <cml:to uri="activemq:queue:com.taulia.queues.trustedComponentEarlyPaymentCancelJsonQueue.delayed" />
+    </cml:route>
+
+    <cml:route>
+      <cml:from uri="activemq:queue:com.taulia.queues.supplier.earlyPayment.CashflowProfileJsonQueue?concurrentConsumers=1&amp;maxConcurrentConsumers=1&amp;asyncConsumer=true" />
+      <cml:delay asyncDelayed="true">
+        <cml:header>AMQ_SCHEDULED_DELAY</cml:header>
+      </cml:delay>
+      <cml:to uri="activemq:queue:com.taulia.queues.supplier.earlyPayment.CashflowProfileJsonQueue.delayed" />
+    </cml:route>
+
+    <cml:route>
+      <cml:from uri="activemq:queue:com.taulia.queues.invoice.taxClearanceProcessing?concurrentConsumers=3&amp;maxConcurrentConsumers=5&amp;asyncConsumer=true" />
+      <cml:delay asyncDelayed="true">
+        <cml:header>AMQ_SCHEDULED_DELAY</cml:header>
+      </cml:delay>
+      <cml:to uri="activemq:queue:com.taulia.queues.invoice.taxClearanceProcessing.delayed" />
+    </cml:route>
+
+    <cml:route>
+      <cml:from uri="activemq:queue:com.taulia.queues.earlypayment.earlyPaymentCreationNotification?concurrentConsumers=3&amp;maxConcurrentConsumers=5&amp;asyncConsumer=true" />
+      <cml:delay asyncDelayed="true">
+        <cml:header>AMQ_SCHEDULED_DELAY</cml:header>
+      </cml:delay>
+      <cml:to uri="activemq:queue:com.taulia.queues.earlypayment.earlyPaymentCreationNotification.delayed" />
+    </cml:route>
+
+    <cml:route>
+      <cml:from uri="activemq:queue:com.taulia.queues.enrollment.erpLoginNotification?concurrentConsumers=3&amp;maxConcurrentConsumers=5&amp;asyncConsumer=true" />
+      <cml:delay asyncDelayed="true">
+        <cml:header>AMQ_SCHEDULED_DELAY</cml:header>
+      </cml:delay>
+      <cml:to uri="activemq:queue:com.taulia.queues.enrollment.erpLoginNotification.delayed" />
+    </cml:route>
+
+    <cml:route>
+      <cml:from uri="activemq:com.taulia.queues.monolith.clientRetryQueue?concurrentConsumers=3&amp;maxConcurrentConsumers=5&amp;asyncConsumer=true" />
+      <cml:delay asyncDelayed="true">
+        <cml:header>AMQ_SCHEDULED_DELAY</cml:header>
+      </cml:delay>
+      <cml:to uri="activemq:com.taulia.queues.monolith.clientRetryQueue.delayed" />
+    </cml:route>
+
+    <!-- End app-prochain -->
+
+    <cml:route>
+      <cml:from uri="activemq:com.taulia.queues.invoice.invoiceUpdateQueue?concurrentConsumers=1&amp;maxConcurrentConsumers=1&amp;asyncConsumer=true" />
+      <cml:delay asyncDelayed="true">
+        <cml:header>AMQ_SCHEDULED_DELAY</cml:header>
+      </cml:delay>
+      <cml:to uri="activemq:com.taulia.queues.invoice.invoiceUpdateQueue.delayed" />
+    </cml:route>
+
+    <!-- Begin Buyer API-->
+    <cml:route>
+      <cml:from uri="activemq:queue:com.taulia.queues.config.persistPurchaseOrderConfirmationAcknowledgement?concurrentConsumers=1&amp;maxConcurrentConsumers=1&amp;asyncConsumer=true" />
+      <cml:delay asyncDelayed="true">
+        <cml:header>AMQ_SCHEDULED_DELAY</cml:header>
+      </cml:delay>
+      <cml:to uri="activemq:queue:com.taulia.queues.config.persistPurchaseOrderConfirmationAcknowledgement.delayed" />
+    </cml:route>
+    <!-- End Buyer API-->
+
+    <cml:route>
+      <cml:from uri="activemq:queue:com.taulia.queues.earlypayment.funderresponse.v2?concurrentConsumers=1&amp;maxConcurrentConsumers=1&amp;asyncConsumer=true" />
+      <cml:delay asyncDelayed="true">
+        <cml:header>AMQ_SCHEDULED_DELAY</cml:header>
+      </cml:delay>
+      <cml:to uri="activemq:queue:com.taulia.queues.earlypayment.funderresponse.v2.delayed" />
+    </cml:route>
+
+
+
+
+  </cml:camelContext>
+
+
+  <bean id="activemq"
+    class="org.apache.activemq.camel.component.ActiveMQComponent">
+    <property name="brokerURL" value="tcp://localhost:61616"/>
+  </bean>
+
+</beans>

@@ -201,9 +201,20 @@ taulia {
   }
 
   ticketMgt {
-    serverUrl = 'http://localhost:8888/'
+    serverUrl = 'http://localhost:9988/'
   }
 
+
+
+  /* ======== Early Payment API V1 ======== */
+  earlyPaymentApiV1 {
+    server = "https://localhost:8490"
+    port = 8490
+    clientCertificateLocation = "./test/integration/com/taulia/certs/ep_appserver.pfx"
+    clientCertificatePassword = "password"
+    trustStoreLocation = "./test/integration/com/taulia/certs/ep_serverstore.jks"
+    trustStorePassword = "password"
+  }
 
   /* ======== intapi-outbound-tracker API ========*/
   outboundTracker {
@@ -245,7 +256,7 @@ taulia {
 /* ======== email API ========== */
   emailApi {
     client {
-      url = "localhost:8430"
+      url = "https://localhost:8430"
       keystoreFile = "./test/integration/com/taulia/certs/email_appserver.pfx"
       keystorePassphrase = "password"
       truststoreFile = "./test/integration/com/taulia/certs/email_serverstore.jks"
@@ -303,9 +314,9 @@ taulia {
 
 /* =========== TrustedComponent API =========== */
   trustedClient {
-    clientCertificateLocation = "/Users/ericanderson/config/monolith_tc/appserver.pfx"
+    clientCertificateLocation = "/Users/eanderson/config/monolith_tc/appserver.pfx"
     clientCertificatePassword = "password"
-    trustStoreLocation = "/Users/ericanderson/config/monolith_tc/serverstore.jks"
+    trustStoreLocation = "/Users/eanderson/config/monolith_tc/serverstore.jks"
     trustStorePassword = "password"
     server = "localhost"
     port = 8488
@@ -382,9 +393,9 @@ taulia {
     maxPoolSize = 10
     timeout = 10000
     version = "v3"
-    clientCertificateLocation = "/Users/ericanderson/config/authapi_monolith.pfx"
+    clientCertificateLocation = "/Users/eanderson/config/authapi_monolith.pfx"
     clientCertificatePassword = "password"
-    trustStoreLocation = "/Users/ericanderson/config/authapi_serverstore.jks"
+    trustStoreLocation = "/Users/eanderson/config/authapi_serverstore.jks"
     trustStorePassword = "password"
   }
 
@@ -413,10 +424,16 @@ taulia {
   }
 
   queueServer {
-    url = 'vm://localhost'
+    url = 'tcp://localhost:61616'
     username = ''
     password = ''
   }
+
+//  queueServer {
+//    url = 'vm://localhost'
+//    username = ''
+//    password = ''
+//  }
 
   /* =========== Platform Hook - runtime injection ========
     This should be used with caution as it allows code injection from platform admin!!
