@@ -1,0 +1,74 @@
+taulia {
+  db {
+    authApi {
+      driver = 'com.mysql.jdbc.Driver'
+      url = 'jdbc:mysql://127.0.0.1:3306/taulia?useGmtMillisForDatetimes=true'
+      username = 'root'
+      password = ''
+      hibernateDbVariant = 'MYSQL'
+    }
+    platform {
+      driver = 'com.mysql.jdbc.Driver'
+      url = 'jdbc:mysql://127.0.0.1:3306/taulia?useGmtMillisForDatetimes=true'
+      username = 'root'
+      password = ''
+      hibernateDbVariant = 'MYSQL'
+    }
+  }
+  jasypt {
+    algorithm = "PBEWITHSHA256AND256BITAES-CBC-BC"
+    providerName = "BC"
+    password = "set in local config.groovy"
+    keyObtentionIterations = 1000
+  }
+  test {
+
+    authApi {
+      baseUri = 'http://localhost:8090/authApi/'
+    }
+
+    clamavApi {
+      baseUri = 'http://localhost:8899/authApi/'
+    }
+
+    intApi {
+      baseUri = 'http://localhost:8889/'
+      cassandraPath = 'cassandraApi/'
+    }
+
+    restApi {
+      baseUri = 'http://localhost:8890/'
+    }
+
+    restBuyerApi {
+      baseUri = 'http://localhost:9998/'
+    }
+
+    pingdom {
+      password = 'Abcd1234!'
+    }
+
+    platform {
+      baseUri = 'http://localhost:8080/tauliaPlatform/'
+    }
+
+    soapApi {
+      baseUri = 'http://localhost:8080/tauliaPlatform/'
+    }
+
+    ticketMgt {
+      serverUrl = 'http://localhost:8888/'
+    }
+
+    xmlRpc {
+      protocol = 'http'
+      host = '127.0.0.1'
+      port = 9012
+      path = '/xmlrpc'
+      trustStore='/Users/stephenbartholomew/Downloads/pod_truststore'
+      incomingIp = '127.0.0.1i'
+      multiErpFlow = true
+    }
+  }
+}
+

@@ -204,7 +204,44 @@ taulia {
     serverUrl = 'http://localhost:9988/'
   }
 
+  /* ======== intapi-outbound-tracker API ========*/
+  outboundTracker {
+    client {
+      url = "https://localhost:8502"
+      keystoreFile = "./test/integration/com/taulia/certs/outboundtracker_appserver.pfx"
+      keystorePassphrase = "password"
+      truststoreFile = "./test/integration/com/taulia/certs/outboundtracker_serverstore.jks"
+      truststorePassphrase = "password"
+      timeout = 10000
+      maxPoolSize = 10
+    }
+  }
 
+  /* ======== intapi-ticket-management API ========*/
+  ticketManagement {
+    client {
+      url = 'https://localhost:9191'
+      keystoreFile = './test/integration/com/taulia/certs/ticket-management-appserver.pfx'
+      keystorePassphrase = 'password'
+      truststoreFile = './test/integration/com/taulia/certs/ticket-management-serverstore.jks'
+      truststorePassphrase = 'password'
+      timeout = 10000
+      maxPoolSize = 10
+    }
+  }
+
+  /* ======== intapi-xmlrpc-translator API ========*/
+  xmlrpcTranslator {
+    client {
+      url = 'https://localhost:8095'
+      keystoreFile = './test/integration/com/taulia/certs/xmlrpc_translator_appserver.pfx'
+      keystorePassphrase = 'password'
+      truststoreFile = './test/integration/com/taulia/certs/xmlrpc_translator_serverstore.jks'
+      truststorePassphrase = 'password'
+      timeout = 10000
+      maxPoolSize = 10
+    }
+  }
 
   /* ======== Early Payment API V1 ======== */
   earlyPaymentApiV1 {
@@ -332,6 +369,15 @@ taulia {
     trustStorePassword = "password"
   }
 
+  /* ======== SIM API v2 ======== */
+  simApiV2 {
+    server = "https://localhost:8588"
+    clientCertificateLocation = "./test/integration/com/taulia/certs/sim_appserver.pfx"
+    clientCertificatePassword = "password"
+    trustStoreLocation = "./test/integration/com/taulia/certs/sim_serverstore.jks"
+    trustStorePassword = "password"
+  }
+
   metrics {
     clientCertificateLocation = "./test/integration/com/taulia/certs/metrics_appserver.pfx"
     clientCertificatePassword = "password"
@@ -411,6 +457,31 @@ taulia {
     }
   }
 
+  /* ======== Branding API ======== */
+  branding {
+    uri = "https://localhost:9449"
+    clientCertificateLocation = "./test/integration/com/taulia/certs/branding_appserver.pfx"
+    clientCertificatePassword = "password"
+    trustStoreLocation = "./test/integration/com/taulia/certs/branding_serverstore.jks"
+    trustStorePassword = "password"
+    maxPoolSize = 10
+    timeout = 10000
+  }
+
+  /* ========== Settings API ========== */
+  settings {
+    client {
+      keystoreFile = './test/integration/com/taulia/certs/settings-appserver.pfx'
+      keystorePassphrase = 'password'
+      truststoreFile = './test/integration/com/taulia/certs/settings-serverstore.jks'
+      truststorePassphrase = 'password'
+      url = 'https://localhost:8686'
+      maxPoolSize = 10
+      timeout = 10000
+      maxFallbackCacheEntries = 50000
+    }
+  }
+
   /* ========== Parameter Encryption ========== */
   parameterEncryptorService {
     password = 'configure-me'
@@ -423,17 +494,17 @@ taulia {
     adminStorageUrl = "https://twa-dev-db.trustweaver.com/ta_hubservices/Admin/AdminService.svc"
   }
 
-  queueServer {
-    url = 'tcp://localhost:61616'
-    username = ''
-    password = ''
-  }
-
 //  queueServer {
-//    url = 'vm://localhost'
+//    url = 'tcp://localhost:61616'
 //    username = ''
 //    password = ''
 //  }
+
+  queueServer {
+    url = 'vm://localhost'
+    username = ''
+    password = ''
+  }
 
   /* =========== Platform Hook - runtime injection ========
     This should be used with caution as it allows code injection from platform admin!!
