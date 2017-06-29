@@ -287,6 +287,7 @@ taulia {
       serverUrl = 'https://localhost:9415'
       maxPoolSize = 10
       timeout = 10000
+      timeoutForLongerCalls = 120000
     }
   }
 
@@ -424,6 +425,40 @@ taulia {
     server = "https://localhost:8420"
   }
 
+  /* ======== Early Payment Cashflow API V1 ======== */
+  cashFlowApiV1 {
+    server = "https://localhost:8490"
+    port = 8490
+    clientCertificateLocation = "./test/integration/com/taulia/certs/ep_appserver.pfx"
+    clientCertificatePassword = "password"
+    trustStoreLocation = "./test/integration/com/taulia/certs/ep_serverstore.jks"
+    trustStorePassword = "password"
+  }
+
+  /* ======== Netted Position API ======== */
+  nettedPosition {
+    uri = "https://localhost:10090"
+    clientCertificateLocation = "./test/integration/com/taulia/certs/nettedposition_appserver.pfx"
+    clientCertificatePassword = "password"
+    trustStoreLocation = "./test/integration/com/taulia/certs/nettedposition_serverstore.jks"
+    trustStorePassword = "password"
+    maxPoolSize = 10
+    timeout = 10000
+  }
+
+  /* ======== PPM ======= */
+  paymentProcessManager {
+    client {
+      keystoreFile = './test/integration/com/taulia/certs/ppm-appserver.pfx'
+      keystorePassphrase = 'password'
+      truststoreFile = './test/integration/com/taulia/certs/ppm-serverstore.jks'
+      truststorePassphrase = 'password'
+      url = 'https://localhost:10070'
+      maxPoolSize = 10
+      timeout = 10000
+    }
+  }
+
   /* =========== LANGUAGES/LOCALES =========== */
   // Strings for java.util.Locale constants (e.g. Locale.US)
   locales {
@@ -482,6 +517,30 @@ taulia {
     }
   }
 
+  /* ========== Attachment API ========== */
+  attachment {
+    client {
+      keystoreFile = './test/integration/com/taulia/certs/attachment-appserver.pfx'
+      keystorePassphrase = 'password'
+      truststoreFile = './test/integration/com/taulia/certs/attachment-serverstore.jks'
+      truststorePassphrase = 'password'
+      url = 'https://localhost:10110'
+      maxPoolSize = 10
+      timeout = 10000
+    }
+  }
+
+  /* ======== Trustweaver API ======== */
+  trustweaverClient {
+    uri = "https://localhost:8480"
+    clientCertificateLocation = "./test/integration/com/taulia/certs/trustweaver_appserver.pfx"
+    clientCertificatePassword = "password"
+    trustStoreLocation = "./test/integration/com/taulia/certs/trustweaver_serverstore.jks"
+    trustStorePassword = "password"
+    maxPoolSize = 10
+    timeout = 10000
+  }
+
   /* ========== Parameter Encryption ========== */
   parameterEncryptorService {
     password = 'configure-me'
@@ -506,9 +565,34 @@ taulia {
     password = ''
   }
 
-  /* =========== Platform Hook - runtime injection ========
-    This should be used with caution as it allows code injection from platform admin!!
-   */
+  internalSSO {
+    serviceProvider {
+      entityId = "http://monolith.sp.taulia.com"
+      keystoreEntry = "samlServiceProvider"
+      keystoreLocation = "./test/integration/com/taulia/certs/samlServiceProvider-key.jks"
+      keystorePassword = "password"
+      keystoreType = "JKS"
+    }
+  }
+  idp {
+    entityId = 'http://idp.taulia.com'
+    redirectEndpoint = 'http://localhost:8465/sso'
+    authenticationFailureDestination = 'http://localhost:8465/login'
+    keystoreEntry = 'idp'
+    keystoreLocation = './test/integration/com/taulia/certs/idp-cert.jks'
+    keystorePassword = 'password'
+    keystoreType = 'JKS'
+    wantsAuthenticationRequestsSigned = true
+    endpoints = [
+      [location: 'http://localhost:8465/sso/logout', operation: 'LOGOUT_REQUEST', supportedBinding: 'REDIRECT'],
+      [location: 'http://localhost:8465/sso/logout', operation: 'LOGOUT_CONFIRMATION', supportedBinding: 'SOAP'],
+      [location: 'http://localhost:8465/sso', operation: 'AUTHENTICATION_REQUEST', supportedBinding: 'REDIRECT']
+    ]
+  }
+
+    /* =========== Platform Hook - runtime injection ========
+      This should be used with caution as it allows code injection from platform admin!!
+     */
   hooks {
     enableEmbeddedHooks = false
   }

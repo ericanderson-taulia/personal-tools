@@ -1,0 +1,27 @@
+{
+  "configuration": {
+    "status": "warn",
+    "name": "tauliaLog",
+    "packages": "corg.graylog2.log4j2",
+    "appenders": {
+      "Console": {
+        "name": "standardOut",
+        "PatternLayout": {
+          "pattern": "%style{%d{MM-dd HH:mm:ss,SSS}}{dim} %highlight{%-5p} %style{%logger{36}}{dim} - %style{%X{requestSource}%X{requestTimestamp}:%X{requestId} - %X{clientType}:%X{userId}:%X{userProxyId}}{cyan} - %style{%marker}{magenta} - %msg%n   "
+        }
+      }
+    },
+    "loggers": {
+      "logger" : [
+        {"name": "org.hibernate.SQL", "level": "DEBUG"},
+        {"name": "org.hibernate.type", "level": "TRACE"}
+      ],
+      "root": {
+        "level": "info",
+        "AppenderRef": {
+          "ref": "standardOut"
+        }
+      }
+    }
+  }
+}

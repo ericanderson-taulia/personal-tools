@@ -1,0 +1,27 @@
+{
+  "configuration": {
+    "status": "warn",
+    "name": "tauliaLog",
+    "packages": "corg.graylog2.log4j2",
+    "appenders": {
+      "Console": {
+        "name": "standardOut",
+        "PatternLayout": {
+          "pattern": "%style{%d{MM-dd HH:mm:ss,SSS}}{dim} %highlight{%-5p} %style{%c{1}:%L}{dim} - %style{%X{requestSource}%X{requestTimestamp}:%X{requestId} - %X{clientType}:%X{userId}:%X{userProxyId}}{cyan} - %style{%marker}{magenta} - %m%n"
+        }
+      }
+    },
+    "loggers": {
+      "logger" : [
+        {"name": "org.springframework.beans", "level": "DEBUG"},
+        {"name": "com.taulia", "level": "DEBUG"}
+      ],
+      "root": {
+        "level": "info",
+        "AppenderRef": {
+          "ref": "standardOut"
+        }
+      }
+    }
+  }
+}
